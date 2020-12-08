@@ -7,18 +7,18 @@ connected horizontally or vertically. You can also assume that the edges of the
 map are surrounded by water.
 Example 1:
 Input: grid = [
-  ["1","1","1","1","0"],
-  ["1","1","0","1","0"],
-  ["1","1","0","0","0"],
-  ["0","0","0","0","0"]
+    ["1","1","1","1","0"],
+    ["1","1","0","1","0"],
+    ["1","1","0","0","0"],
+    ["0","0","0","0","0"]
 ]
 Output: 1
 Example 2:
 Input: grid = [
-  ["1","1","0","0","0"],
-  ["1","1","0","0","0"],
-  ["0","0","1","0","0"],
-  ["0","0","0","1","1"]
+    ["1","1","0","0","0"],
+    ["1","1","0","0","0"],
+    ["0","0","1","0","0"],
+    ["0","0","0","1","1"]
 ]
 Output: 3
 """
@@ -26,4 +26,74 @@ from collections import deque
 
 def numIslands(grid):
     # Your code here
-    pass
+    # if there is no grid or the grid is empty then
+    if grid is None or len(grid) == 0:
+        # return zero
+        return 0
+
+    # store some lens and an island count
+    nr = len(grid)    # row
+    nc = len(grid[0]) # column
+    island_count = 0
+
+    # iterate over each row
+    for row in range(nr):
+        # iterate over each col
+        for col in range(nc):
+            # check if our grid at [row][col] is 1
+            if grid[row][col] == "1":
+                # increment the number of islands
+                island_count += 1
+                # mark it as visited
+                grid[row][col] = "0"  # which it to "0" that was visited
+
+                # set up a queue of neighbors
+                neighbors = deque()
+                # append row * number_col + col to neighbors
+                neighbors.append(row * nc + col)
+
+
+                # while there are still neighbors
+                while len(neighbors) != 0:
+                    # set up an id based on a current neighbor and REMOVE the neighbor
+                    # id = neighbors.remove()
+                    id = neighbors.popleft()
+                    
+                    # set the row
+                    row = id // nc
+                    # set the col
+                    col = id % nc
+
+                    # check all the directions 
+                    # for connected components
+
+                    # check up
+                    if row - 1 >= 0 and grid[row - 1][col] == "1":
+                        neighbors.append((row - 1) * nc + col)
+                        grid[row - 1][col] = "0"
+                    
+                    # check down
+                    if row + 1 >= 0 and grid[row + 1][col] == "1":
+                        neighbors.append((row + 1) * nc + col)
+                        grid[row + 1][col] = "0"
+
+                    # check left
+                    if col - 1 >= 0 and grid[col - 1][row] == "1":
+                        neighbors.append((col - 1) * nc + row)
+                        grid[col - 1][row] = "0"
+
+                    # check right
+                    if col + 1 >= 0 and grid[col + 1][row] == "1":
+                        neighbors.append((col + 1) * nc + row)
+                        grid[col + 1][row] = "0"
+    return island_count
+
+
+grid = [
+    ["1","1","1","1","0"],
+    ["1","1","0","1","0"],
+    ["1","1","0","0","0"],
+    ["0","0","0","0","0"]
+]
+
+print(numIslands(grid))
