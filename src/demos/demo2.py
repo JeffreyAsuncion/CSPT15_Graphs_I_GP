@@ -78,14 +78,14 @@ def numIslands(grid):
                         grid[row + 1][col] = "0"
 
                     # check left
-                    if col - 1 >= 0 and grid[col - 1][row] == "1":
-                        neighbors.append((col - 1) * nc + row)
-                        grid[col - 1][row] = "0"
+                    if col - 1 >= 0 and grid[row][col - 1] == "1":
+                        neighbors.append((row) * nc + (col - 1))
+                        grid[row][col - 1] = "0"
 
                     # check right
-                    if col + 1 >= 0 and grid[col + 1][row] == "1":
-                        neighbors.append((col + 1) * nc + row)
-                        grid[col + 1][row] = "0"
+                    if col + 1 >= 0 and grid[row][col + 1] == "1":
+                        neighbors.append((row) * nc + (col + 1))
+                        grid[row][col + 1] = "0"
     return island_count
 
 
