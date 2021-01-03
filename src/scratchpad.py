@@ -11,10 +11,11 @@ class Vertex:
     
     # add a connection?
     def add_connection(self, vert, weight = 0):
-        self.connection[vert] = weight
+        self.connections[vert] = weight
 
     # display the connections
     def get_connections(self):
+        # return just the weights
         return self.connections.keys()
 
     # display / get the value
@@ -22,7 +23,7 @@ class Vertex:
         return self.value
 
     # a possible get weight
-    def get_weight(self, weight):
+    def get_weight(self, vert):
         return self.connections[vert]
 
 
@@ -35,7 +36,7 @@ class Graph:
         # keep track of size
         self.count = 0
 
-    def __contains__(self, value):
+    def __contains__(self, vert):
         return vert in self.vertices
 
     def __iter__(self):
@@ -60,7 +61,7 @@ class Graph:
             self.add_vertex(vert1)
         # check if vert2 is not in the graph
         if vert2 not in self.vertices:
-            # add vert1 to the graph
+            # add vert2 to the graph
             self.add_vertex(vert2)
         
         # add a connection from vert1 to vert2 pass in a weight
