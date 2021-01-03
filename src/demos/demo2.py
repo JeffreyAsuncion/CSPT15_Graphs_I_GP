@@ -22,6 +22,18 @@ Input: grid = [
 ]
 Output: 3
 """
+
+
+"""
+
+Islands Problem
+or
+Connected Components
+
+"""
+
+
+
 from collections import deque
 
 def numIslands(grid):
@@ -42,6 +54,7 @@ def numIslands(grid):
         for col in range(nc):
             # check if our grid at [row][col] is 1
             if grid[row][col] == "1":
+                # it is an island
                 # increment the number of islands
                 island_count += 1
                 # mark it as visited
@@ -50,6 +63,7 @@ def numIslands(grid):
                 # set up a queue of neighbors
                 neighbors = deque()
                 # append row * number_col + col to neighbors
+                # this makes it a 1-D array
                 neighbors.append(row * nc + col)
 
 
@@ -59,6 +73,7 @@ def numIslands(grid):
                     # id = neighbors.remove()
                     id = neighbors.popleft()
                     
+                    # this remake it into a 2-D array
                     # set the row
                     row = id // nc
                     # set the col
@@ -73,7 +88,7 @@ def numIslands(grid):
                         grid[row - 1][col] = "0"
                     
                     # check down
-                    if row + 1 >= 0 and grid[row + 1][col] == "1":
+                    if row + 1 < nr and grid[row + 1][col] == "1":
                         neighbors.append((row + 1) * nc + col)
                         grid[row + 1][col] = "0"
 
@@ -83,7 +98,7 @@ def numIslands(grid):
                         grid[row][col - 1] = "0"
 
                     # check right
-                    if col + 1 >= 0 and grid[row][col + 1] == "1":
+                    if col + 1 < nc and grid[row][col + 1] == "1":
                         neighbors.append((row) * nc + (col + 1))
                         grid[row][col + 1] = "0"
     return island_count
@@ -94,6 +109,15 @@ grid = [
     ["1","1","0","1","0"],
     ["1","1","0","0","0"],
     ["0","0","0","0","0"]
+]
+
+print(numIslands(grid))
+
+grid = [
+    ["1","1","0","0","0"],
+    ["1","1","0","0","0"],
+    ["0","0","1","0","0"],
+    ["0","0","0","1","1"]
 ]
 
 print(numIslands(grid))
